@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Todo Basics</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+  <script type="text/babel">
+    function App() {
+        const [todos, setTodos] = React.useState([]);
+        const [inputValue, setInputValue] = React.useState('');
+        return (
+            <div>
+                <h1>Todo App</h1>
+                <div>
+                    <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Add a new task...."
+                    />
+                    <button onClick={() => {
+                        if (inputValue.trim() === '') return;
+                        setTodos([
+                            ...todos,
+                            { id: Date.now(), text: inputValue, completed: false }
+                        ]);
+                        setInputValue('')
+                    }}>
+                        Add
+                    </button>
+                </div>
+                <ul>
+                    {todos.map((todo) => (
+                        <li key={todo.id}>
+                            <input
+                                type="checkbox"
+                                checked={todo.completed}
+                                onChange={() => {
+                                    setTodos(
+                                        todos.map((t) =>
+                                            t.id === todo.id ? { ...t, completed: !t.completed } : t
+                                        )
+                                    );
+                                }}
+                            />
+                            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+                                {todo.text}
+                            </span>
+                            <button onClick={() => setTodos(todos.filter((t) => t.id !== todo.id))}>
+                                Delete
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />)
+  </script>
+</body>
+</html>
