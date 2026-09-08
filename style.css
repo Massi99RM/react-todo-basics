@@ -166,3 +166,64 @@ body {
   text-decoration: line-through;
   color: #9ca3af;
 }
+
+/* Navigation & Concepts Page */
+.nav-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: #f1f3f5;
+  padding: 4px;
+  border-radius: 8px;
+}
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #495057;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+.nav-link:hover {
+  color: #212529;
+}
+.nav-link.active {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.concept-intro {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.concept-section {
+  margin-bottom: 1.5rem;
+}
+
+.concept-section h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.concept-section p {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+.concept-section pre {
+  background: #f1f3f5;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  white-space: pre;
+  font-family: monospace;
+}

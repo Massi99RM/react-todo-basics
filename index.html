@@ -10,98 +10,117 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
+  <div class="app-container">
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-link">Todo App</a>
+      <a href="concepts.html" class="nav-link">Concepts</a>
+      <a href="playground.html" class="nav-link">Playground</a>
+    </nav>
+
     <div id="root"></div>
+  </div>
+
   <script type="text/babel">
     function App() {
-    const [todos, setTodos] = React.useState([]);
-    const [inputValue, setInputValue] = React.useState('');
-    const [filter, setFilter] = React.useState('all');
+        const [todos, setTodos] = React.useState([]);
+        const [inputValue, setInputValue] = React.useState('');
+        const [filter, setFilter] = React.useState('all');
 
-    const filteredTodos = todos.filter((todo) => {
-        if (filter === 'active') return !todo.completed;
-        if (filter === 'completed') return todo.completed;
-        return true;
-    });
+        const filteredTodos = todos.filter((todo) => {
+            if (filter === 'active') return !todo.completed;
+            if (filter === 'completed') return todo.completed;
+            return true;
+        });
 
-    return (
-        <div className="app-container"> 
-            <h1 className="app-title">Todo App</h1> 
-            <div className="filter-bar">
-                <button 
-                    className={filter === 'all' ? 'filter-btn active' : 'filter-btn'} 
-                    onClick={() => setFilter('all')}
-                >
-                    All
-                </button>
-                <button 
-                    className={filter === 'active' ? 'filter-btn active' : 'filter-btn'} 
-                    onClick={() => setFilter('active')}
-                >
-                    Active
-                </button>
-                <button 
-                    className={filter === 'completed' ? 'filter-btn active' : 'filter-btn'} 
-                    onClick={() => setFilter('completed')}
-                >
-                    Completed
-                </button>
+        return (
+            <div>
+                <h1 className="app-title">Todo App</h1>
+                
+                <div className="filter-bar">
+                    <button 
+                        className={filter === 'all' ? 'filter-btn active' : 'filter-btn'} 
+                        onClick={() => setFilter('all')}
+                    >
+                        All
+                    </button>
+                    <button 
+                        className={filter === 'active' ? 'filter-btn active' : 'filter-btn'} 
+                        onClick={() => setFilter('active')}
+                    >
+                        Active
+                    </button>
+                    <button 
+                        className={filter === 'completed' ? 'filter-btn active' : 'filter-btn'} 
+                        onClick={() => setFilter('completed')}
+                    >
+                        Completed
+                    </button>
+                </div>
+
+                <div className="input-section">
+                    <input
+                        className="todo-input"
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Add a new task...."
+                    />
+                    <button 
+                        className="btn-primary"
+                        onClick={() => {
+                            if (inputValue.trim() === '') return;
+                            setTodos([
+                                ...todos,
+                                { id: Date.now(), text: inputValue, completed: false }
+                            ]);
+                            setInputValue('')
+                        }}
+                    >
+                        Add
+                    </button>
+                </div>
+                <ul className="todo-list">
+                    {filteredTodos.map((todo) => (
+                        <li key={todo.id} className="todo-item">
+                            <div className="todo-item-left">
+                                <input
+                                    type="checkbox"
+                                    checked={todo.completed}
+                                    onChange={() => {
+                                        setTodos(
+                                            todos.map((t) =>
+                                                t.id === todo.id ? { ...t, completed: !t.completed } : t
+                                            )
+                                        );
+                                    }}
+                                />
+                                <span className={`todo-text ${todo.completed ? 'completed' : ''}`}>
+                                    {todo.text}
+                                </span>
+                            </div>
+                            <button 
+                                className="btn-danger"
+                                onClick={() => setTodos(todos.filter((t) => t.id !== todo.id))}
+                            >
+                                Delete
+                            </button>
+                        </li>
+                    ))}
+                </ul>
             </div>
-
-            <div className="input-section"> 
-                <input
-                    className="todo-input" 
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Add a new task...."
-                />
-                <button 
-                    className="btn-primary" 
-                    onClick={() => {
-                        if (inputValue.trim() === '') return;
-                        setTodos([
-                            ...todos,
-                            { id: Date.now(), text: inputValue, completed: false }
-                        ]);
-                        setInputValue('')
-                    }}
-                >
-                    Add
-                </button>
-            </div>
-            <ul className="todo-list"> 
-                {filteredTodos.map((todo) => (
-                    <li key={todo.id} className="todo-item"> 
-                        <div className="todo-item-left">
-                            <input
-                                type="checkbox"
-                                checked={todo.completed}
-                                onChange={() => {
-                                    setTodos(
-                                        todos.map((t) =>
-                                            t.id === todo.id ? { ...t, completed: !t.completed } : t
-                                        )
-                                    );
-                                }}
-                            />
-                            <span className={`todo-text ${todo.completed ? 'completed' : ''}`}> 
-                                {todo.text}
-                            </span>
-                        </div>
-                        <button 
-                            className="btn-danger"
-                            onClick={() => setTodos(todos.filter((t) => t.id !== todo.id))}
-                        >
-                            Delete
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-}
+        );
+    }
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />)
   </script>
+
+  <script>
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-bar a').forEach(link => {
+      if (link.getAttribute('href') === currentPath) {
+        link.classList.add('active');
+      }
+    });
+  </script>
 </body>
-</html> 
+</html>
