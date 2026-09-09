@@ -227,3 +227,46 @@ body {
   white-space: pre;
   font-family: monospace;
 }
+
+/* Playground Page */
+.playground-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.playground-widget {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.widget-header h3 {
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.counter-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.counter-display {
+  font-size: 1.25rem;
+  font-weight: 600;
+  min-width: 2rem;
+  text-align: center;
+  color: #1f2937;
+}

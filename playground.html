@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Playground - Todo Basics</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-link">Todo App</a>
+      <a href="concepts.html" class="nav-link">Concepts</a>
+      <a href="playground.html" class="nav-link">Playground</a>
+    </nav>
+
+    <div id="root"></div>
+  </div>
+
+  <script type="text/babel">
+    function CounterWidget({ id, onRemove }) {
+        const [count, setCount] = React.useState(0);
+
+        return (
+            <div className="playground-widget">
+                <div className="widget-header">
+                    <h3>Counter Widget</h3>
+                    <button className="btn-danger" onClick={() => onRemove(id)}>Remove</button>
+                </div>
+                <div className="counter-content">
+                    <button className="btn-primary" onClick={() => setCount(count - 1)}>-</button>
+                    <span className="counter-display">{count}</span>
+                    <button className="btn-primary" onClick={() => setCount(count + 1)}>+</button>
+                </div>
+            </div>
+        );
+    }
+
+    function LiveListWidget({ id, onRemove }) {
+        const [items, setItems] = React.useState([]);
+        const [text, setText] = React.useState('');
+
+        const addItem = () => {
+            if (text.trim() === '') return;
+            setItems([...items, { id: Date.now(), text }]);
+            setText('');
+        };
+
+        return (
+            <div className="playground-widget">
+                <div className="widget-header">
+                    <h3>Live List Widget</h3>
+                    <button className="btn-danger" onClick={() => onRemove(id)}>Remove</button>
+                </div>
+                <div className="input-section">
+                    <input
+                        className="todo-input"
+                        type="text"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        placeholder="Type an item..."
+                    />
+                    <button className="btn-primary" onClick={addItem}>Add</button>
+                </div>
+                <ul className="todo-list">
+                    {items.map((item) => (
+                        <li key={item.id} className="todo-item">
+                            <span className="todo-text">{item.text}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
+    function App() {
+        const [widgets, setWidgets] = React.useState([]);
+
+        const addWidget = (type) => {
+            setWidgets([...widgets, { id: Date.now(), type }]);
+        };
+
+        const removeWidget = (id) => {
+            setWidgets(widgets.filter((w) => w.id !== id));
+        };
+
+        return (
+            <div>
+                <h1 className="app-title">React Playground</h1>
+                
+                <div className="playground-toolbar">
+                    <button className="btn-primary" onClick={() => addWidget('counter')}>Add Counter</button>
+                    <button className="btn-primary" onClick={() => addWidget('list')}>Add Live List</button>
+                </div>
+
+                <div className="widget-area">
+                    {widgets.map((widget) => {
+                        if (widget.type === 'counter') {
+                            return <CounterWidget key={widget.id} id={widget.id} onRemove={removeWidget} />;
+                        }
+                        if (widget.type === 'list') {
+                            return <LiveListWidget key={widget.id} id={widget.id} onRemove={removeWidget} />;
+                        }
+                        return null;
+                    })}
+                </div>
+            </div>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+
+  <script>
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-bar a').forEach(link => {
+      if (link.getAttribute('href') === currentPath) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
