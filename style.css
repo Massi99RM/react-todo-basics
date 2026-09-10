@@ -1,3 +1,17 @@
+/* CSS Custom Properties */
+:root {
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-danger: #dc2626;
+  --color-text: #1f2937;
+  --color-text-muted: #4b5563;
+  --color-surface: #f1f3f5;
+  --color-text-secondary: #495057;
+  --color-text-disabled: #9ca3af;
+  --radius: 8px;
+  --transition: 0.2s;
+}
+
 /* Global Reset & Base Layout */
 * {
   box-sizing: border-box;
@@ -40,9 +54,9 @@ body {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1.25rem;
-  background: #f1f3f5;
+  background: var(--color-surface);
   padding: 4px;
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 
 .filter-btn {
@@ -52,10 +66,9 @@ body {
   background: transparent;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #495057;
-  border-radius: 6px;
+  color: var(--color-text-secondary);  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition) ease;
 }
 
 .filter-btn:hover {
@@ -64,7 +77,7 @@ body {
 
 .filter-btn.active {
   background: #ffffff;
-  color: #2563eb;
+  color: var(--color-primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -79,42 +92,42 @@ body {
   flex: 1;
   padding: 0.75rem 1rem;
   border: 1px solid #d1d5db;
-  border-radius: 8px;
+  border-radius: var(--radius);
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color var(--transition);
 }
 
 .todo-input:focus {
-  border-color: #2563eb;
+  border-color: var(--color-primary);
 }
 
 /* Buttons */
 .btn-primary {
-  background-color: #2563eb;
+  background-color: var(--color-primary);
   color: white;
   border: none;
   padding: 0.75rem 1.25rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition);
 }
 
 .btn-primary:hover {
-  background-color: #1d4ed8;
+  background-color: var(--color-primary-dark);
 }
 
 .btn-danger {
   background-color: transparent;
-  color: #dc2626;
+  color: var(--color-danger);
   border: 1px solid transparent;
   padding: 0.4rem 0.75rem;
   border-radius: 6px;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition);
 }
 
 .btn-danger:hover {
@@ -157,14 +170,14 @@ body {
 /* Task Text (span) */
 .todo-text {
   font-size: 1rem;
-  color: #1f2937;
+  color: var(--color-text);
   word-break: break-word;
-  transition: color 0.2s, opacity 0.2s;
+  transition: color var(--transition), opacity var(--transition);
 }
 
 .todo-text.completed {
   text-decoration: line-through;
-  color: #9ca3af;
+  color: var(--color-text-disabled);
 }
 
 /* Navigation & Concepts Page */
@@ -172,9 +185,9 @@ body {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
-  background: #f1f3f5;
+  background: var(--color-surface);
   padding: 4px;
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 .nav-link {
   flex: 1;
@@ -183,23 +196,23 @@ body {
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #495057;
+  color: var(--color-text-secondary);
   border-radius: 6px;
-  transition: all 0.2s ease;
+  transition: all var(--transition) ease;
 }
 .nav-link:hover {
   color: #212529;
 }
 .nav-link.active {
   background: #ffffff;
-  color: #2563eb;
+  color: var(--color-primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .concept-intro {
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
-  color: #4b5563;
+  color: var(--color-text-muted);
   line-height: 1.5;
 }
 
@@ -210,16 +223,16 @@ body {
 .concept-section h2 {
   font-size: 1.15rem;
   margin-bottom: 0.5rem;
-  color: #1f2937;
+  color: var(--color-text);
 }
 
 .concept-section p {
   font-size: 0.9rem;
-  color: #4b5563;
+  color: var(--color-text-muted);
   margin-bottom: 0.5rem;
 }
 .concept-section pre {
-  background: #f1f3f5;
+  background: var(--color-surface);
   padding: 0.75rem;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -238,7 +251,7 @@ body {
 .playground-widget {
   background: #f9fafb;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: 1rem;
   margin-bottom: 1rem;
 }
@@ -252,7 +265,7 @@ body {
 
 .widget-header h3 {
   font-size: 1rem;
-  color: #1f2937;
+  color: var(--color-text);
 }
 
 .counter-content {
@@ -268,5 +281,57 @@ body {
   font-weight: 600;
   min-width: 2rem;
   text-align: center;
-  color: #1f2937;
+  color: var(--color-text);
+}
+
+.toggle-content {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toggle-status {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.playground-widget.widget-dark {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.playground-widget.widget-dark .widget-header h3,
+.playground-widget.widget-dark .toggle-status {
+  color: #f9fafb;
+}
+
+.fetch-content {
+  padding: 0.5rem 0;
+}
+
+.fetch-status {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.joke-setup {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.joke-punchline {
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.fetch-btn {
+  margin-top: 0.75rem;
+}
+
+.fetch-error {
+  font-size: 0.9rem;
+  color: var(--color-danger);
 }

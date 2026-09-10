@@ -76,6 +76,80 @@
         );
     }
 
+    function ToggleWidget({ id, onRemove }) {
+        const [isDark, setIsDark] = React.useState(false);
+
+        return (
+            <div className={`playground-widget ${isDark ? 'widget-dark' : ''}`}>
+                <div className="widget-header">
+                    <h3>Toggle Widget</h3>
+                    <button className="btn-danger" onClick={() => onRemove(id)}>Remove</button>
+                </div>
+                <div className="toggle-content">
+                    <button 
+                        className="btn-primary" 
+                        onClick={() => setIsDark(!isDark)}
+                    >
+                        {isDark ? 'Switch to Light' : 'Switch to Dark'}
+                    </button>
+                    <p className="toggle-status">Current mode: {isDark ? 'Dark 🌙' : 'Light ☀️'}</p>
+                </div>
+            </div>
+        );
+    }
+
+    function FetchWidget({ id, onRemove }) {
+        const [joke, setJoke] = React.useState(null);
+        const [loading, setLoading] = React.useState(true);
+        const [error, setError] = React.useState(null);
+
+        const fetchJoke = () => {
+            setLoading(true);
+            setError(null)
+            fetch('https://official-joke-api.appspot.com/random_joke')
+                .then((res) => res.json())
+                .then((data) => {
+                    setJoke(data);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    setError('Failed to load joke. Try again.');
+                    setLoading(false);
+                });
+                
+        };
+
+        React.useEffect(() => {
+            fetchJoke();
+        }, []);
+
+        return (
+            <div className="playground-widget">
+                <div className="widget-header">
+                    <h3>Fetch Widget</h3>
+                    <button className="btn-danger" onClick={() => onRemove(id)}>Remove</button>
+                </div>
+                <div className="fetch-content">
+                    {loading && <p className="fetch-status">Loading joke...</p>}
+                    {error && <p className="fetch-error">{error}</p>}
+                    {!loading && !error && (
+                        <div>
+                            <p className="joke-setup"><strong>{joke.setup}</strong></p>
+                            <p className="joke-punchline">{joke.punchline}</p>
+                        </div>
+                    )}
+                    <button 
+                        className="btn-primary" 
+                        onClick={fetchJoke} 
+                        disabled={loading}
+                    >
+                        Get Another Joke
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     function App() {
         const [widgets, setWidgets] = React.useState([]);
 
@@ -94,6 +168,8 @@
                 <div className="playground-toolbar">
                     <button className="btn-primary" onClick={() => addWidget('counter')}>Add Counter</button>
                     <button className="btn-primary" onClick={() => addWidget('list')}>Add Live List</button>
+                    <button className="btn-primary" onClick={() => addWidget('toggle')}>Add Toggle</button>
+                    <button className="btn-primary" onClick={() => addWidget('fetch')}>Add Fetch</button>
                 </div>
 
                 <div className="widget-area">
@@ -103,6 +179,12 @@
                         }
                         if (widget.type === 'list') {
                             return <LiveListWidget key={widget.id} id={widget.id} onRemove={removeWidget} />;
+                        }
+                        if (widget.type === 'toggle') {
+                            return <ToggleWidget key={widget.id} id={widget.id} onRemove={removeWidget} />;
+                        }
+                        if (widget.type === 'fetch') {
+                            return <FetchWidget key={widget.id} id={widget.id} onRemove={removeWidget} />; 
                         }
                         return null;
                     })}
