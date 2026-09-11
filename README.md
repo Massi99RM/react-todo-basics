@@ -4,32 +4,42 @@
 ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-A lightweight, zero-build Todo List application built to learn the core fundamentals of React: state management, event handling, and dynamic rendering.
+A lightweight, multi-page zero-build React learning suite designed to explore foundational and intermediate React concepts through interactive implementations and a modular sandbox playground.
 
 ## Overview
 
-This project explores the three essential pillars of React without the overhead of a complex build toolchain. By relying purely on an HTML file with React and Babel loaded via CDN, it strips away configuration complexity to focus strictly on component logic.
+This project expands beyond a simple task manager into a comprehensive learning hub. By maintaining a zero-build toolchain using CDNs and Babel standalone, it strips away configuration complexity, allowing developers to inspect real-time JSX compilation, shared stylesheets, and multi-page routing via vanilla JavaScript.
 
 ### Core Concepts
 
-State: Managing and updating the live array of tasks.
+State Management: Tracking primitive, array, and boolean states using useState across multiple isolated components.
 
-Events: Capturing user inputs to add, complete, and delete items.
+Event & Data Flow: Handling user interactions via onChange and onClick handlers, supporting dynamic task filtering (All, Active, Completed).
 
-Rendering: Dynamically mapping state arrays to live UI elements.
+Side Effects & Asynchronous Logic: Utilizing useEffect to safely perform API data fetching, manage loading states, and handle network errors without triggering infinite render loops.
+
+Component Architecture: Building reusable custom components with unique identifiers (id: Date.now()) and scalable prop structures.
 
 ## How it works
 
-This single-page application functions as an interactive task manager that lets users add, check off, and delete daily to-do items directly in the browser interface.
+The project is structured into three distinct pages connected by a dynamic navigation bar that automatically detects the active route:
 
-Unlike typical React applications that require Node.js, npm, and a bundler (such as Vite or Webpack), this project loads React, ReactDOM, and Babel directly via CDN script tags inside a single HTML file. Babel compiles the JSX in real time within the browser, allowing for instant execution without a local build step.
+Todo App (index.html): Task manager with addition, completion toggling, deletion, and real-time category filtering
+
+Concepts Guide (concepts.html): A reference documentation page breaking down core React pillars (State, Events, Rendering) with isolated code snippets from the codebase.
+
+Interactive Playground (playground.html): Sandbox where visitors can dynamically mount and unmount custom React widgets, including a Counter, Live List, Toggle/Dark Mode Switch, and a Fetch Widget integrating live REST API requests..
 
 ## Project Structure
 
 ```
 react-todo-basics/
 │
-├── index.html       # Single-file implementation (HTML, CSS, and React logic)
+├── index.html       # Interactive Todo list application
+├── concepts.html    # React core concepts reference guide
+├── playground.html    # Interactive widget builder sandbox
+├── style.css        # Shared global stylesheet
+├── .gitignore
 └── README.md
 ```
 
